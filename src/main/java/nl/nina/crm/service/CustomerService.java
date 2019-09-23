@@ -2,7 +2,7 @@ package nl.nina.crm.service;
 
 import java.util.List;
 
-import nl.nina.crm.entity.Customer;
+import nl.nina.crm.model.Customer;
 
 public interface CustomerService {
 	

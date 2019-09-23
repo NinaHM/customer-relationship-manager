@@ -33,6 +33,10 @@ table {
 	width:50%;
 }
 
+.error-message {
+	color: red;
+}
+
 tr:nth-child(even) {background: #FFFFFF}
 tr:nth-child(odd) {background: #FFFFFF}
 

@@ -9,7 +9,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import nl.nina.crm.entity.Customer;
+import nl.nina.crm.model.Customer;
 
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
@@ -20,9 +20,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public CustomerDAOImpl(EntityManager theEntityManager) {
 		entityManager = theEntityManager;
 	}
-
-//	@Autowired
-//	private SessionFactory sessionFactory;
 
 	@Override
 	public List<Customer> getCustomers() {

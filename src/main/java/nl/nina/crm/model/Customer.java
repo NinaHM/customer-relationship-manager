@@ -1,4 +1,4 @@
-package nl.nina.crm.entity;
+package nl.nina.crm.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="customer")
@@ -20,9 +21,11 @@ public class Customer {
 	private String firstName;
 	
 	@Column(name="last_name")
+	@NotNull(message="Last name is required")
 	private String lastName;
 	
 	@Column(name="email")
+	@NotNull(message="E-mail address is required")
 	private String email;
 	
 	public Customer() {

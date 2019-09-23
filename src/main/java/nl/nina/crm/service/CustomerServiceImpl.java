@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import nl.nina.crm.dao.CustomerDAO;
-import nl.nina.crm.entity.Customer;
+import nl.nina.crm.model.Customer;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {

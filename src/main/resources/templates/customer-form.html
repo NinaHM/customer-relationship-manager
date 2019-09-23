@@ -32,20 +32,25 @@
    						<td><input type="text" th:field="*{firstName}"/>
    					</tr>
    					<tr>
-   						<td><label>Last name:</label></td>
+   						<td><label>Last name*:</label></td>
    						<td><input type="text" th:field="*{lastName}"/>
    					</tr>
    					<tr>
-   						<td><label>E-mail:</label></td>
+   						<td><label>E-mail*:</label></td>
    						<td><input type="text" th:field="*{email}"/>
    					</tr>
    					<tr>
+   						<td></td>
+   						<td>
+   							<p class="error-message" th:if="${#fields.hasErrors('all')}" th:errors="*{all}">error message</p>
+   						</td>
+   					</tr>	
+   					<tr>
 						<td><label></label></td>
-						<td><input type="submit" value="Submit" class="save"/></td>
-   					</tr>			
+						<td><input type="submit" value="Save" class="save"/></td>
+   					</tr>		
    				</tbody>
-   			</table>
-   			
+   			</table>   			
 		</form>
 
 		<div style="clear; both;"></div>
