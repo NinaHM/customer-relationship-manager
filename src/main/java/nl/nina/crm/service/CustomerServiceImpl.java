@@ -11,10 +11,10 @@ import nl.nina.crm.model.Customer;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-	
+
 	@Autowired
 	private CustomerDAO customerDAO;
-	
+
 	@Override
 	@Transactional
 	public List<Customer> getCustomers() {
@@ -36,7 +36,13 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public void deleteCustomer(int id) {
-		customerDAO.deleteCustomer(id);		
+		customerDAO.deleteCustomer(id);
+	}
+
+	@Override
+	@Transactional
+	public List<Customer> searchCustomers(String searchName) {
+		return customerDAO.searchCustomers(searchName);
 	}
 
 }

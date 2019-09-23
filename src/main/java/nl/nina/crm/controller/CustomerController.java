@@ -24,18 +24,25 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
-	
+
 	@GetMapping("/")
 	public String home() {
 		return "redirect:/list";
 	}
-	
+
+	@GetMapping("/search")
+	public String searchCustomers(@RequestParam("searchName") String searchName, Model model) {
+		List<Customer> customers = customerService.searchCustomers(searchName);
+		model.addAttribute("customers", customers);
+		return "list-customers";
+	}
+
 	@GetMapping("/list")
 	public String listCustomers(Model model) {
 		List<Customer> customers = customerService.getCustomers();
@@ -52,11 +59,11 @@ public class CustomerController {
 
 	@PostMapping("/saveCustomer")
 	public String saveCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult bindingResult) {
-		
+
 		if (bindingResult.hasErrors()) {
 			return "customer-form";
 		}
-		
+
 		customerService.saveCustomer(customer);
 		return "redirect:/list";
 	}
@@ -67,7 +74,7 @@ public class CustomerController {
 		model.addAttribute("customer", customer);
 		return "customer-form";
 	}
-	
+
 	@GetMapping("/delete")
 	public String deleteCustomer(@RequestParam("customerId") int id) {
 		customerService.deleteCustomer(id);
