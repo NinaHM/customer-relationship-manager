@@ -1,48 +1,58 @@
 package nl.nina.crm.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import nl.nina.crm.dao.CustomerDAO;
 import nl.nina.crm.model.Customer;
+import nl.nina.crm.repository.CustomerRepository;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
-	private CustomerDAO customerDAO;
-
+	private CustomerRepository customerRepository;
+	
 	@Override
-	@Transactional
 	public List<Customer> getCustomers() {
-		return customerDAO.getCustomers();
+		return customerRepository.findAll();
 	}
 
 	@Override
-	@Transactional
 	public void saveCustomer(Customer customer) {
-		customerDAO.saveCustomer(customer);
+		customerRepository.save(customer);
 	}
 
 	@Override
-	@Transactional
 	public Customer getCustomer(int id) {
-		return customerDAO.getCustomer(id);
+		Optional<Customer> result = customerRepository.findById(id);
+		
+		Customer customer = null;
+		
+		if(result.isPresent()) {
+			customer = result.get();
+		} else {
+			customer = new Customer();
+		}
+		
+		return customer;
 	}
-
+	
 	@Override
-	@Transactional
 	public void deleteCustomer(int id) {
-		customerDAO.deleteCustomer(id);
+		customerRepository.deleteById(id);
 	}
 
 	@Override
-	@Transactional
 	public List<Customer> searchCustomers(String searchName) {
-		return customerDAO.searchCustomers(searchName);
+
+		if (searchName != null) {
+			return customerRepository.findByFirstOrLastName(searchName);
+		} else {
+			return customerRepository.findAll();
+		}
 	}
 
 }
