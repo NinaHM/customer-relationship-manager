@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import nl.nina.crm.model.Customer;
 import nl.nina.crm.service.CustomerService;
@@ -50,9 +52,16 @@ public class CustomerController {
 		return "list-customers";
 	}
 
-	@GetMapping("/showFormForAdd")
-	public String showFormForAdd(Model model) {
-		Customer customer = new Customer();
+	@GetMapping("/showForm")
+	public String showForm(@RequestParam(name = "customerId", required = false) Integer id, Model model) {
+		Customer customer = null;
+		
+		if(id == null) {
+			customer = new Customer();
+		} else {
+			customer = customerService.getCustomer(id);
+		}
+		
 		model.addAttribute("customer", customer);
 		return "customer-form";
 	}
@@ -68,16 +77,18 @@ public class CustomerController {
 		return "redirect:/list";
 	}
 
-	@GetMapping("/showFormForUpdate")
-	public String showFormForUpdate(@RequestParam("customerId") int id, Model model) {
-		Customer customer = customerService.getCustomer(id);
-		model.addAttribute("customer", customer);
-		return "customer-form";
-	}
-
 	@GetMapping("/delete")
-	public String deleteCustomer(@RequestParam("customerId") int id) {
-		customerService.deleteCustomer(id);
+	public String deleteCustomer(@RequestParam("customerId") int id,  RedirectAttributes redirect) {
+		String status = null;
+		
+		try {
+			customerService.deleteCustomer(id);
+		} catch (EmptyResultDataAccessException e) {
+			status = "fail";
+			e.printStackTrace();
+		}
+		
+		redirect.addAttribute("status", status);
 		return "redirect:/list";
 	}
 }

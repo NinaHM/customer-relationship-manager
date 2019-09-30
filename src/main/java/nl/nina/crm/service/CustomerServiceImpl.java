@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import nl.nina.crm.model.Customer;
@@ -17,7 +18,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public List<Customer> getCustomers() {
-		return customerRepository.findAll();
+		return customerRepository.findAllSorted();
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
 		if (searchName != null) {
 			return customerRepository.findByFirstOrLastName(searchName);
 		} else {
-			return customerRepository.findAll();
+			return customerRepository.findAllSorted();
 		}
 	}
 

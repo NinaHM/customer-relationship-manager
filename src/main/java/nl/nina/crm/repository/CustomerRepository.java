@@ -11,7 +11,11 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	
 	 @Query("from Customer where firstName like %?1%"
 	 		+ "or lastName like %?1%"
-			+ "or concat(firstName, ' ', lastName) like %?1%")
+			+ "or concat(firstName, ' ', lastName) like %?1%"
+	 		+ "order by lastName, firstName")
 	 List<Customer> findByFirstOrLastName(String name);	
+	 
+	 @Query("from Customer order by lastName, firstName") 
+	 List<Customer> findAllSorted();
 	 
 }

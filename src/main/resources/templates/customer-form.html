@@ -23,7 +23,7 @@
 		<div class="card border-light p-3 my-4 col-md-6 offset-md-3 text-left bg-light">
 			<div class="card-body">
 			
-			<h2 class="text-center" style="padding-bottom: 20px">Save customer</h2>
+			<h2 class="text-center mb-4">Save customer</h2>
 			
 			<form action="#" th:action="@{/saveCustomer}" th:object="${customer}" method="post">
 			
@@ -31,7 +31,7 @@
 	   			
 	   			<div class="form-group">
 				    <label for="firstName">First name</label>
-				    <input type="text" class="form-control" id="firstName" th:field="*{firstName}" placeholder="Enter first name">
+				    <input type="text" class="form-control" th:field="*{firstName}" placeholder="Enter first name">
 			  	</div>
 			  	<div class="form-group">
 				    <label>Last name*</label>
@@ -49,8 +49,8 @@
           				error message
         			</div>
 			  	</div>
-			  	<div class="text-center" style="padding: 20px">
-			  		<button type="submit" class="btn btn-success">Save customer</button>
+			  	<div class="text-center" >
+			  		<button type="submit" class="btn btn-success col-4 m-4">Save customer</button>
 			  	</div>
 			</form>
 
