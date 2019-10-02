@@ -81,14 +81,9 @@ public class CustomerController implements WebMvcConfigurer {
 
 	@GetMapping("/delete")
 	public String deleteCustomer(@RequestParam("customerId") int id) {
-		String status = null;
-		
-		try {
-			customerService.deleteCustomer(id);
-		} catch (EmptyResultDataAccessException e) {
-			status = "error";
-			e.printStackTrace();
-		}
-		return "redirect:/list?" + status;
+
+		customerService.deleteCustomer(id);
+
+		return "redirect:/list";
 	}
 }
