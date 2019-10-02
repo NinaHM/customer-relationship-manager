@@ -15,6 +15,9 @@
   		<span class="navbar-brand">
     		CRM - Customer Relationship Manager
   		</span>
+		<form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
+       		<input class="btn btn-outline-light" type="submit" value="Sign Out"/> 
+   		</form>
 	</nav>
 
 	<div class="container">	
@@ -33,10 +36,8 @@
 		  	</form>		
 		</div>
 		
-		<div th:if="${param.status != null}">
-		 	<div class="alert alert-danger" th:if="${param.status[0] == 'fail'}">
-				Something went wrong, please try again.
-			</div>
+	 	<div class="alert alert-danger" th:if="${param.error}">
+			Something went wrong, please try again.
 		</div>
 
 		<table class="table">

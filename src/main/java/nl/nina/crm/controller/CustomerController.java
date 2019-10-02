@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import nl.nina.crm.model.Customer;
 import nl.nina.crm.service.CustomerService;
 
 @Controller
-public class CustomerController {
+public class CustomerController implements WebMvcConfigurer {
 
 	@Autowired
 	private CustomerService customerService;
@@ -32,11 +33,12 @@ public class CustomerController {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
-
-	@GetMapping("/")
-	public String home() {
-		return "redirect:/list";
-	}
+	
+	@Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("redirect:/list");
+        registry.addViewController("/login").setViewName("login");
+    }
 
 	@GetMapping("/search")
 	public String searchCustomers(@RequestParam("searchName") String searchName, Model model) {
@@ -78,17 +80,15 @@ public class CustomerController {
 	}
 
 	@GetMapping("/delete")
-	public String deleteCustomer(@RequestParam("customerId") int id,  RedirectAttributes redirect) {
+	public String deleteCustomer(@RequestParam("customerId") int id) {
 		String status = null;
 		
 		try {
 			customerService.deleteCustomer(id);
 		} catch (EmptyResultDataAccessException e) {
-			status = "fail";
+			status = "error";
 			e.printStackTrace();
 		}
-		
-		redirect.addAttribute("status", status);
-		return "redirect:/list";
+		return "redirect:/list?" + status;
 	}
 }
