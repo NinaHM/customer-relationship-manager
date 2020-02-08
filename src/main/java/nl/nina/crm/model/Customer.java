@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="customer")
@@ -26,6 +27,7 @@ public class Customer {
 	
 	@Column(name="email")
 	@NotNull(message="E-mail address is required")
+	@Pattern(regexp="[^@\\s]+@[^@\\s]+\\.[^@\\s]+", message="Valid e-mail address is required.")  
 	private String email;
 	
 	public Customer() {
